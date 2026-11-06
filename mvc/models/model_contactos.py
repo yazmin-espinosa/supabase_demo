@@ -28,6 +28,8 @@ class ModelContactos:
         return response.data
 
     # Inserta un registro
+    # El try y el ecxept sirve para ver errores de manera mas facil.
+    # Se ele puede poner cualquier numero pero conviene hacerlso desde el 100
     def insertarContacto(self, nombre, email, telefono):
         datos = {
             "nombre": nombre,
@@ -36,6 +38,8 @@ class ModelContactos:
         }
         response = self.supabase.table("contactos").insert(datos).execute()
         return response.data
+    except Exception as error:
+        print(f"ERROR 103: {os.error.args[0]}")
 
     # Borra un registro por su ID
     def borrarContacto(self, id_contacto: int):
