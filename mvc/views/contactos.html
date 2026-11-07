@@ -1,1 +1,22 @@
-<h1></h1>
+$def with(datos)
+<h1>Contactos</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>EMAIL</th>
+            <th>TELEFONO</th>
+        </tr>
+    </thead>
+    <tbody>
+        $for registro in datos:
+            <tr>
+                <td>$registro.get('id')</td>
+                <td>$registro.get('nombre')</td>
+                <td>$registro.get('email')</td>
+                <td>$registro.get('telefono')</td>
+            </tr>
+    </tbody>
+</table>
