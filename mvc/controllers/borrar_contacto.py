@@ -1,19 +1,27 @@
 import web 
 from mvc.models.model_contactos import ModelContactos  
 
-render = web.template.render('mvc/views', base='template')  
+render = web.template.render('mvc/views', base='template') 
 
 class BorrarContacto:
 
-    def GET(self, id_contacto): 
+    def GET(self, id_contacto):
 
         model_contactos = ModelContactos()
 
-        resultado = model_contactos.buscarContacto(int(id_contacto))
+        resultado = model_contactos.buscarContacto(id_contacto)
 
-        # Envía la lista completa para mantener compatibilidad con $contacto[0] en el HTML
+        # Pasa la lista completa (resultado) o una lista vacía para mantener la estructura de la vista
         contacto = resultado if resultado else []
 
         print(contacto)
 
         return render.borrar_contacto(contacto) # type: ignore
+
+    def POST(self, id_contacto):
+
+        model_contactos = ModelContactos()
+
+        model_contactos.borrarContacto(id_contacto)
+
+        raise web.seeother('/contactos')

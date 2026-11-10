@@ -1,4 +1,5 @@
 import web
+import logging
 
 from mvc.controllers.index import Index
 from mvc.controllers.contactos import Contactos
@@ -7,6 +8,13 @@ from mvc.controllers.ver_contacto import VerContacto
 from mvc.controllers.borrar_contacto import BorrarContacto
 from mvc.controllers.actualizar_contacto import ActualizarContacto
 
+logging.basicConfig(
+    filename="app.log",
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    encoding="utf-8",  # Evita errores con tildes o caracteres especiales
+)
 
 web.config.debug = False
 
@@ -18,6 +26,7 @@ urls = (
     '/borrar_contacto/(.*)', 'BorrarContacto',
     '/actualizar_contacto/(.*)', 'ActualizarContacto'
 )
+
 app = web.application(urls, globals())
 
 if __name__ == "__main__":

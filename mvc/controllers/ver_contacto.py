@@ -9,7 +9,7 @@ class VerContacto:
 
         model_contactos = ModelContactos()
 
-        resultado = model_contactos.buscarContacto(int(id_contacto))
+        resultado = model_contactos.buscarContacto(id_contacto)
 
         # Pasa la lista completa (resultado) o una lista vacía para mantener la estructura de la vista
         contacto = resultado if resultado else []
