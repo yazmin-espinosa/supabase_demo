@@ -1,6 +1,8 @@
 $def with(datos)
 <h1>Contactos</h1>
 
+<a href="/insertar_contacto">Nuevo Contacto</a>
+
 <table>
     <thead>
         <tr>
@@ -8,6 +10,9 @@ $def with(datos)
             <th>NOMBRE</th>
             <th>EMAIL</th>
             <th>TELEFONO</th>
+            <th>VER</th>
+            <th>ACTUALIZAR</th>
+            <th>BORRAR</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +22,9 @@ $def with(datos)
                 <td>$registro.get('nombre')</td>
                 <td>$registro.get('email')</td>
                 <td>$registro.get('telefono')</td>
+                <td><a href="/ver_contacto/$registro.get('id')">Ver</a></td>
+                <td><a href="/actualizar_contacto/$registro.get('id')">Actualizar</a></td>
+                <td><a href="/borrar_contacto/$registro.get('id')">Borrar</a></td>
             </tr>
     </tbody>
 </table>

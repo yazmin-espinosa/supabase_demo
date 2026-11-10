@@ -2,6 +2,10 @@ import web
 
 from mvc.controllers.index import Index
 from mvc.controllers.contactos import Contactos
+from mvc.controllers.insertar_contacto import InsertarContacto
+from mvc.controllers.ver_contacto import VerContacto
+from mvc.controllers.borrar_contacto import BorrarContacto
+from mvc.controllers.actualizar_contacto import ActualizarContacto
 
 
 web.config.debug = False
@@ -9,8 +13,11 @@ web.config.debug = False
 urls = (
     '/', 'Index',
     '/contactos', 'Contactos',
+    '/insertar_contacto', 'InsertarContacto',
+    '/ver_contacto/(.*)', 'VerContacto',
+    '/borrar_contacto/(.*)', 'BorrarContacto',
+    '/actualizar_contacto/(.*)', 'ActualizarContacto'
 )
-
 app = web.application(urls, globals())
 
 if __name__ == "__main__":
