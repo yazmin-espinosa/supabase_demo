@@ -1,10 +1,10 @@
 import os
-import hashlib
-import hmac
-import logging
-from typing import Any, cast
 from supabase import create_client, Client
 from dotenv import load_dotenv
+import hashlib
+import hmac
+from typing import Any, cast
+import logging
 
 load_dotenv()
 
@@ -20,7 +20,7 @@ class ModelContactos:
             )
             self.SECRET_KEY = b"holi"
         except Exception as error:
-            logger.error("ERROR 100: %s", error)
+            logger.error(f"ERROR 100: {str(error)}")
             print(f"ERROR 100: {str(error)}")
 
     def generar_hash(self, id: int) -> str:
@@ -49,19 +49,18 @@ class ModelContactos:
     def obtenerContactos(self) -> list[dict[str, Any]]:
         contactos: list[dict[str, Any]] = []
         try:
-            response = self.supabase.table("contactos").select("*").execute()
+            response = self.supabase.table("contactos").select("*").order("id", desc=False).execute()
             registros = response.data or []
             
             for registro in registros:
-                # Si tu columna en Supabase se llama "id", la leemos aquí
-                # y creamos/modificamos el campo "id_contacto" para la vista
-                id_num = int(registro.get("id") or registro.get("id_contacto"))
-                registro["id_contacto"] = self.generar_hash(id_num)
-                contactos.append(registro)
-                
+                reg = cast(dict[str, Any], registro)
+                id_num = int(reg.get("id") or reg.get("id_contacto") or 0)
+                reg["id_contacto"] = self.generar_hash(id_num)
+                contactos.append(reg)
+
             return contactos
         except Exception as error:
-            logger.error("ERROR 101: %s", error)
+            logger.error(f"ERROR 101: {str(error)}")
             print(f"ERROR 101: {str(error)}")
             return []
 
@@ -74,7 +73,7 @@ class ModelContactos:
             response = self.supabase.table("contactos").select("*").eq("id", id_real).execute()
             return response.data
         except Exception as error:
-            logger.error("ERROR 102: %s", error)
+            logger.error(f"ERROR 102: {str(error)}")
             print(f"ERROR 102: {str(error)}")
             return []
 
@@ -88,7 +87,7 @@ class ModelContactos:
             response = self.supabase.table("contactos").insert(datos).execute()
             return response.data
         except Exception as error:
-            logger.error("ERROR 103: %s", error)
+            logger.error(f"ERROR 103: {str(error)}")
             print(f"ERROR 103: {str(error)}")
             return None
 
@@ -100,7 +99,7 @@ class ModelContactos:
             response = self.supabase.table("contactos").delete().eq("id", id_real).execute()
             return response.data
         except Exception as error:
-            logger.error("ERROR 104: %s", error)
+            logger.error(f"ERROR 104: {str(error)}")
             print(f"ERROR 104: {str(error)}")
             return None
 
@@ -117,6 +116,6 @@ class ModelContactos:
             response = self.supabase.table("contactos").update(datos).eq("id", id_real).execute()
             return response.data
         except Exception as error:
-            logger.error("ERROR 105: %s", error)
+            logger.error(f"ERROR 105: {str(error)}")
             print(f"ERROR 105: {str(error)}")
             return None

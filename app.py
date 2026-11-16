@@ -9,7 +9,7 @@ from mvc.controllers.borrar_contacto import BorrarContacto
 from mvc.controllers.actualizar_contacto import ActualizarContacto
 
 logging.basicConfig(
-    filename="app.log",
+    filename="aplicacion.log",
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
