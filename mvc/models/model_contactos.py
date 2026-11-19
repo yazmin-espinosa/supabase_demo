@@ -77,12 +77,13 @@ class ModelContactos:
             print(f"ERROR 102: {str(error)}")
             return []
 
-    def insertarContacto(self, nombre: str, email: str, telefono: str):
+    def insertarContacto(self, nombre: str, email: str, telefono: str, foto: str):
         try:
             datos = {
                 "nombre": nombre,
                 "email": email,
-                "telefono": telefono
+                "telefono": telefono,
+                "foto": foto
             }
             response = self.supabase.table("contactos").insert(datos).execute()
             return response.data
@@ -103,7 +104,7 @@ class ModelContactos:
             print(f"ERROR 104: {str(error)}")
             return None
 
-    def actualizarContacto(self, id_contacto: str, nombre: str, email: str, telefono: str):
+    def actualizarContacto(self, id_contacto: str, nombre: str, email: str, telefono: str, foto: str):
         try:
             id_real = self.validar_hash(id_contacto)
             if id_real is None:
@@ -111,7 +112,8 @@ class ModelContactos:
             datos = {
                 "nombre": nombre,
                 "email": email,
-                "telefono": telefono
+                "telefono": telefono,
+                "foto": foto
             }
             response = self.supabase.table("contactos").update(datos).eq("id", id_real).execute()
             return response.data
@@ -119,3 +121,11 @@ class ModelContactos:
             logger.error(f"ERROR 105: {str(error)}")
             print(f"ERROR 105: {str(error)}")
             return None
+
+if __name__=="__main__":
+    model_contactos = ModelContactos()
+    print(model_contactos.obtenerContactos())
+    print(model_contactos.buscarContacto("1:hash_ejemplo"))
+    print(model_contactos.insertarContacto("Juan", "juan@email.com", "5551234567", "default.png"))
+    print(model_contactos.actualizarContacto("1:hash_ejemplo", "Juan", "juan@email.com", "5551234567", "default.png"))
+    print(model_contactos.borrarContacto("1:hash_ejemplo"))

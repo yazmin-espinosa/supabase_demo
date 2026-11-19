@@ -6,6 +6,7 @@ $def with(datos)
 <table>
     <thead>
         <tr>
+            <th>FOTO</th>
             <th>ID</th>
             <th>NOMBRE</th>
             <th>EMAIL</th>
@@ -18,6 +19,7 @@ $def with(datos)
     <tbody>
         $for registro in datos:
             <tr>
+                <td><img src="/static/foto/$registro.get('foto')" height="50px" width="50px"></td>
                 <td>$registro.get('id')</td>
                 <td>$registro.get('nombre')</td>
                 <td>$registro.get('email')</td>
