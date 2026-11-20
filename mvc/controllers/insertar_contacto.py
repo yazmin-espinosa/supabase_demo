@@ -1,3 +1,4 @@
+import os
 import web 
 from mvc.models.model_contactos import ModelContactos  
 
@@ -8,15 +9,13 @@ class InsertarContacto:
 
     # Rederiza la vista insertar_contacto.html
     def GET(self):
-
         return render.insertar_contacto() # type: ignore
     
     #Recibee los input del formulario y accede a cada uno
     #Utilizando del atributo "name"
     def POST(self):
-
         #Accede a los datos del formulario 'contactos'
-        formulario = web.input()
+        formulario = web.input(foto={})
         #Obtiene el valor del input 'nombre'
         nombre = formulario['nombre']
         #Obtiene el valor del input 'email'
@@ -24,14 +23,15 @@ class InsertarContacto:
         #Obtiene el valor del input 'telefono'
         telefono = formulario['telefono']
 
-        #
-        #print(f"Nombre: {nombre}")
-        #print(f"Email: {email}")
-        #print(f"Telefono: {telefono}")
+        archivo = formulario['foto']
+        foto = archivo.filename
+
+        ruta = os.path.join("static/fotos/",foto)
+        with open(ruta, "wb") as file:
+            file.write(formulario.foto.read())
 
         model_contactos = ModelContactos()
-        
-        datos=model_contactos.insertarContacto(nombre, email, telefono)
+        datos = model_contactos.insertarContacto(nombre, email, telefono,foto)
 
         web.header('Content-Type', 'text/html')
         html = """

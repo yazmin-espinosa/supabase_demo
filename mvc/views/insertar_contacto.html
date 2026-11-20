@@ -1,13 +1,29 @@
-<form name="contactos" method="POST">
-    <label for="nombre">Nombre</label>
-    <input type="text" name="nombre" id="nombre" required>
+<form name="contactos" method="POST" enctype="multipart/form-data">
+    
+    <div>
+        <label for="nombre">Nombre</label><br>
+        <input type="text" name="nombre" id="nombre" required>
+    </div>
 
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
+    <div>
+        <label for="email">Email</label><br>
+        <input type="email" name="email" id="email" required>
+    </div>
 
-    <label for="telefono">Teléfono</label>
-    <input type="tel" name="telefono" id="telefono">
+    <div>
+        <label for="telefono">Teléfono</label><br>
+        <input type="tel" name="telefono" id="telefono">
+    </div>
 
-    <button type="submit" name="guardar" id="guardar">Guardar</button>
-    <button type="reset" name="limpiar" id="limpiar">Limpiar</button>
+    <div>
+        <label for="foto">Foto de perfil</label><br>
+        <!-- accept=".png" solo permite subir archivos con esa extensión -->
+        <input type="file" name="foto" id="foto" accept=".png" required>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <button type="submit" name="guardar" id="guardar">Guardar</button>
+        <button type="reset" name="limpiar" id="limpiar">Limpiar</button>
+    </div>
+
 </form>

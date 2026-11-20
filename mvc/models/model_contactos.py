@@ -79,6 +79,7 @@ class ModelContactos:
 
     def insertarContacto(self, nombre: str, email: str, telefono: str, foto: str):
         try:
+            #INSERT INTO contactos(nombre, email, telefono, foto) VALUES(?, ?, ?, ?,);
             datos = {
                 "nombre": nombre,
                 "email": email,
