@@ -4,7 +4,6 @@ from mvc.models.model_contactos import ModelContactos
 
 render = web.template.render('mvc/views', base='template') 
 
-
 class InsertarContacto:
 
     # Rederiza la vista insertar_contacto.html
@@ -24,14 +23,15 @@ class InsertarContacto:
         telefono = formulario['telefono']
 
         archivo = formulario['foto']
-        foto = archivo.filename
+        foto = os.path.basename(archivo.filename)
 
-        ruta = os.path.join("static/fotos/",foto)
+        ruta = os.path.join("static", "foto", foto)
+        contenido = archivo.file.read() if hasattr(archivo, 'file') and archivo.file else archivo.raw
         with open(ruta, "wb") as file:
-            file.write(formulario.foto.read())
+            file.write(contenido)
 
         model_contactos = ModelContactos()
-        datos = model_contactos.insertarContacto(nombre, email, telefono,foto)
+        datos = model_contactos.insertarContacto(nombre, email, telefono, foto)
 
         web.header('Content-Type', 'text/html')
         html = """

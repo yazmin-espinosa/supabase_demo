@@ -1,3 +1,4 @@
+import os
 import web 
 from mvc.models.model_contactos import ModelContactos  
 
@@ -22,11 +23,23 @@ class ActualizarContacto:
 
         model_contactos = ModelContactos()
 
-        form = web.input()
+        # Busca el contacto actual para conservar su foto si no se sube una nueva
+        resultado = model_contactos.buscarContacto(id_contacto)
+        foto = resultado[0]['foto'].strip() if resultado and resultado[0].get('foto') else 'default.png'
+
+        form = web.input(foto={})
         nombre = form.get('nombre', '')
         email = form.get('email', '')
         telefono = form.get('telefono', '')
 
-        model_contactos.actualizarContacto(id_contacto, nombre, email, telefono)
+        archivo = form.get('foto')
+        if archivo and getattr(archivo, 'filename', ''):
+            foto = os.path.basename(archivo.filename)
+            ruta = os.path.join("static", "foto", foto)
+            contenido = archivo.value if hasattr(archivo, 'value') else archivo.file.read()
+            with open(ruta, "wb") as file:
+                file.write(contenido)
+
+        model_contactos.actualizarContacto(id_contacto, nombre, email, telefono, foto)
 
         raise web.seeother('/contactos')
